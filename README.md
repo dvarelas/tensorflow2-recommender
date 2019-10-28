@@ -4,7 +4,7 @@ This repo contains implementations of various recommender systems using Tensorfl
 
 Models implemented:
 1. Matrix factorization
-2. Neural collaborative filtering (soon)
+2. Neural collaborative filtering
 3. Item embeddings (soon)
 4. User embeddings (soon)
 
