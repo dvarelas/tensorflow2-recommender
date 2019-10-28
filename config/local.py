@@ -1,14 +1,3 @@
-class TrainingArguments(object):
-    """
-    Training arguments
-    """
-    def __init__(self, user_dim, item_dim, batch_size, num_epochs):
-        self.user_dim = user_dim
-        self.item_dim = item_dim
-        self.batch_size = batch_size
-        self.num_epochs = num_epochs
-
-
 class ColumnNames(object):
     """
     Column names
