@@ -10,5 +10,5 @@ Models implemented:
 
 All models are trained and evaluated using Movielens.
 
-The purpose of this repository is not to compare the methodologies listed above but to provide examples of how they can
+The purpose of this repository is not to compare the methodologies listed above but to provide examples of how they can be
 implemented using tensorflow 2.
