@@ -5,12 +5,14 @@ class MatrixFactorization(object):
     """
     This class implements matrix factorization using the tf2 api
     """
+
     def __init__(self, n_users, n_items, user_dim, item_dim):
         self.n_users = n_users
         self.n_items = n_items
         self.user_dim = user_dim
         self.item_dim = item_dim
-        self.input_user, self.input_item, self.input_rating, self.user_embeddings, self.item_embeddings = self.fit()
+        self.input_user, self.input_item, self.input_rating, self.user_embeddings, self.item_embeddings = self.fit(
+        )
 
     @staticmethod
     def inputs_init():
@@ -18,9 +20,9 @@ class MatrixFactorization(object):
         Initialises the necessary inputs
         :return:
         """
-        input_user = tf.keras.Input((1,))
-        input_item = tf.keras.Input((1,))
-        input_rating = tf.keras.Input((1,))
+        input_user = tf.keras.Input((1, ))
+        input_item = tf.keras.Input((1, ))
+        input_rating = tf.keras.Input((1, ))
         return input_user, input_item, input_rating
 
     def embeddings_layers_init(self):
@@ -54,13 +56,15 @@ class MatrixFactorization(object):
         """
         input_item_vector = self.item_embeddings(self.input_item)
         input_user_vector = self.user_embeddings(self.input_user)
-        input_item_vector_reshaped = tf.keras.layers.Reshape((self.item_dim, 1))(input_item_vector)
-        input_user_vector_reshaped = tf.keras.layers.Reshape((self.user_dim, 1))(input_user_vector)
+        input_item_vector_reshaped = tf.keras.layers.Reshape(
+            (self.item_dim, 1))(input_item_vector)
+        input_user_vector_reshaped = tf.keras.layers.Reshape(
+            (self.user_dim, 1))(input_user_vector)
 
         dot_product = tf.keras.layers.dot(
-            [input_item_vector_reshaped, input_user_vector_reshaped],
-            axes=2)
-        predicted_rating = tf.keras.layers.Dense(1, activation='linear')(dot_product)
+            [input_item_vector_reshaped, input_user_vector_reshaped], axes=2)
+        predicted_rating = tf.keras.layers.Dense(
+            1, activation='linear')(dot_product)
         return predicted_rating
 
     def model(self):
@@ -69,6 +73,5 @@ class MatrixFactorization(object):
         :return:
         """
         model = tf.keras.Model(
-            inputs=[self.input_user, self.input_item],
-            outputs=self.predict())
+            inputs=[self.input_user, self.input_item], outputs=self.predict())
         return model

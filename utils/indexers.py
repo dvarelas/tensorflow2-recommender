@@ -4,6 +4,7 @@ class ColumnIndexer(object):
     columns like user id, item id in a pandas dataframe
 
     """
+
     def __init__(self, df, col_names):
         self.df = df
         self.col_names = col_names
@@ -16,7 +17,10 @@ class ColumnIndexer(object):
 
         :return:
         """
-        distinct_items = {col_name: set(self.df[col_name].values) for col_name in self.col_names}
+        distinct_items = {
+            col_name: set(self.df[col_name].values)
+            for col_name in self.col_names
+        }
         return distinct_items
 
     def generate_indexers(self):
@@ -27,8 +31,15 @@ class ColumnIndexer(object):
         :return:
         """
         indexers = {
-            col: {k: v for v, k in enumerate(distinct_item)} for col, distinct_item in self.distinct_items.items()}
-        reverse_indexers = {col: {v: k for k, v in indexer.items()} for col, indexer in indexers.items()}
+            col: {k: v
+                  for v, k in enumerate(distinct_item)}
+            for col, distinct_item in self.distinct_items.items()
+        }
+        reverse_indexers = {
+            col: {v: k
+                  for k, v in indexer.items()}
+            for col, indexer in indexers.items()
+        }
         return indexers, reverse_indexers
 
     def transform(self, dataset):
@@ -43,4 +54,3 @@ class ColumnIndexer(object):
             dataset[col + '_indexed'] = dataset[col]\
                 .map(self.indexers[col])
         return dataset
-

@@ -5,12 +5,8 @@ class NeuralCF(object):
     """
     This class implements matrix factorization using the tf2 api
     """
-    def __init__(self,
-                 n_users,
-                 n_items,
-                 user_dim,
-                 item_dim,
-                 hidden1_dim,
+
+    def __init__(self, n_users, n_items, user_dim, item_dim, hidden1_dim,
                  hidden2_dim):
         self.n_users = n_users
         self.n_items = n_items
@@ -18,7 +14,8 @@ class NeuralCF(object):
         self.item_dim = item_dim
         self.hidden1_dim = hidden1_dim
         self.hidden2_dim = hidden2_dim
-        self.input_user, self.input_item, self.input_rating, self.user_embeddings, self.item_embeddings = self.fit()
+        self.input_user, self.input_item, self.input_rating, self.user_embeddings, self.item_embeddings = self.fit(
+        )
 
     @staticmethod
     def inputs_init():
@@ -26,9 +23,9 @@ class NeuralCF(object):
         Initialises the necessary inputs
         :return:
         """
-        input_user = tf.keras.Input((1,))
-        input_item = tf.keras.Input((1,))
-        input_rating = tf.keras.Input((1,))
+        input_user = tf.keras.Input((1, ))
+        input_item = tf.keras.Input((1, ))
+        input_rating = tf.keras.Input((1, ))
         return input_user, input_item, input_rating
 
     def embeddings_layers_init(self):
@@ -62,20 +59,23 @@ class NeuralCF(object):
         """
         input_item_vector = self.item_embeddings(self.input_item)
         input_user_vector = self.user_embeddings(self.input_user)
-        input_item_vector_reshaped = tf.keras.layers.Reshape((self.item_dim, 1))(input_item_vector)
-        input_user_vector_reshaped = tf.keras.layers.Reshape((self.user_dim, 1))(input_user_vector)
+        input_item_vector_reshaped = tf.keras.layers.Reshape(
+            (self.item_dim, 1))(input_item_vector)
+        input_user_vector_reshaped = tf.keras.layers.Reshape(
+            (self.user_dim, 1))(input_user_vector)
 
         # concatenation of user and item embeddings
         user_item_vector_concat = tf.keras.layers.concatenate(
-            [input_item_vector_reshaped, input_user_vector_reshaped],
-            axis=1)
+            [input_item_vector_reshaped, input_user_vector_reshaped], axis=1)
 
         # first dense layer
-        dense1 = tf.keras.layers.Dense(self.hidden1_dim)(user_item_vector_concat)
+        dense1 = tf.keras.layers.Dense(
+            self.hidden1_dim)(user_item_vector_concat)
         dropout_1 = tf.keras.layers.Dropout(0.1)(dense1)
         # second dense layer
         dense2 = tf.keras.layers.Dense(self.hidden2_dim)(dropout_1)
-        predicted_rating = tf.keras.layers.Dense(1, activation='linear')(dense2)
+        predicted_rating = tf.keras.layers.Dense(
+            1, activation='linear')(dense2)
         return predicted_rating
 
     def model(self):
@@ -84,6 +84,5 @@ class NeuralCF(object):
         :return:
         """
         model = tf.keras.Model(
-            inputs=[self.input_user, self.input_item],
-            outputs=self.predict())
+            inputs=[self.input_user, self.input_item], outputs=self.predict())
         return model

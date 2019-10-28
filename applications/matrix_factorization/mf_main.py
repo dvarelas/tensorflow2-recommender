@@ -41,41 +41,33 @@ def main(config):
     number_of_items = len(set(train[col_names.item_col].values))
 
     # create user item rating tuples
-    train_users_items_ratings = (
-        (train[col_names.user_col + '_indexed'].values,
-            train[col_names.item_col + '_indexed'].values),
-        train[col_names.rating_col].values)
+    train_users_items_ratings = ((
+        train[col_names.user_col + '_indexed'].values,
+        train[col_names.item_col + '_indexed'].values),
+                                 train[col_names.rating_col].values)
 
-    test_users_items_ratings = (
-        (test[col_names.user_col + '_indexed'].values,
-         test[col_names.item_col + '_indexed'].values),
-        test[col_names.rating_col].values)
+    test_users_items_ratings = ((test[col_names.user_col + '_indexed'].values,
+                                 test[col_names.item_col + '_indexed'].values),
+                                test[col_names.rating_col].values)
 
     # instantiate the tf datasets
-    train_dataset = tf.data.Dataset.from_tensor_slices(train_users_items_ratings)
+    train_dataset = tf.data.Dataset.from_tensor_slices(
+        train_users_items_ratings)
     test_dataset = tf.data.Dataset.from_tensor_slices(test_users_items_ratings)
 
     train_batches = train_dataset.shuffle(1000).batch(training_args.batch_size)
     test_batches = test_dataset.batch(training_args.batch_size)
 
-    mf = MatrixFactorization(
-        number_of_users,
-        number_of_items,
-        training_args.user_dim,
-        training_args.item_dim)
+    mf = MatrixFactorization(number_of_users, number_of_items,
+                             training_args.user_dim, training_args.item_dim)
 
     model = mf.model()
 
     print(model.summary())
 
-    model.compile(
-        optimizer='adam',
-        loss='mean_squared_error',
-        metrics=['mse'])
+    model.compile(optimizer='adam', loss='mean_squared_error', metrics=['mse'])
 
-    model.fit(
-        train_batches,
-        epochs=training_args.num_epochs)
+    model.fit(train_batches, epochs=training_args.num_epochs)
 
     print('\n# Evaluate')
     print(model.evaluate(test_batches))
