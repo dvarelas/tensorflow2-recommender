@@ -9,6 +9,7 @@ This repo contains implementations of various recommender systems using Tensorfl
 2. *Neural collaborative filtering*
 3. *Item embeddings (soon)*
 4. *User embeddings (soon)*
+5. *User and item embeddings combined in a feed forward Neural Network (soon)*
 
 All models are trained and evaluated using Movielens.
 
