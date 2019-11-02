@@ -14,8 +14,8 @@ class NeuralCF(object):
         self.item_dim = item_dim
         self.hidden1_dim = hidden1_dim
         self.hidden2_dim = hidden2_dim
-        self.input_user, self.input_item, self.input_rating, self.user_embeddings, self.item_embeddings = self.fit(
-        )
+        self.input_user, self.input_item, self.input_rating, self.user_embeddings, self.item_embeddings =\
+            self.inputs_weights_init()
 
     @staticmethod
     def inputs_init():
@@ -42,7 +42,7 @@ class NeuralCF(object):
 
         return user_embeddings, item_embeddings
 
-    def fit(self):
+    def inputs_weights_init(self):
         """
         Initialises inputs and weights
         :return:
