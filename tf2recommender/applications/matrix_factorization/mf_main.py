@@ -1,8 +1,8 @@
 import pandas as pd
 import tensorflow as tf
 
-from models.mf import MatrixFactorization
-from utils.indexers import ColumnIndexer
+from tf2recommender.models.mf import MatrixFactorization
+from tf2recommender.utils.indexers import ColumnIndexer
 
 
 def main(config):
@@ -11,7 +11,7 @@ def main(config):
 
     # read in the train set
     train = pd.read_csv(
-        'data/u1_base.csv',
+        'tf2recommender/data/u1_base.csv',
         sep='\t',
         header=None,
         usecols=[0, 1, 2],
@@ -19,7 +19,7 @@ def main(config):
 
     # read in the test set
     test = pd.read_csv(
-        'data/u1_test.csv',
+        'tf2recommender/data/u1_test.csv',
         sep='\t',
         header=None,
         usecols=[0, 1, 2],

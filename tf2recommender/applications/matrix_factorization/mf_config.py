@@ -1,4 +1,4 @@
-from config.local import ColumnNames
+from tf2recommender.config.local import ColumnNames
 
 
 class MfTrainingArguments(object):

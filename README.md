@@ -2,7 +2,7 @@
 
 This repo contains implementations of various recommender systems using Tensorflow 2
 
-![image](images/tf2.png)
+![image](tf2recommender/images/tf2.png)
 
 ## Models implemented:
 1. *Matrix factorization*
