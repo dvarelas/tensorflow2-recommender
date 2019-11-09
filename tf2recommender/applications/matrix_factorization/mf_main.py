@@ -55,8 +55,8 @@ def main(config):
         train_users_items_ratings)
     test_dataset = tf.data.Dataset.from_tensor_slices(test_users_items_ratings)
 
-    train_batches = train_dataset.shuffle(1000).batch(training_args.batch_size)
-    test_batches = test_dataset.batch(training_args.batch_size)
+    train_batches = train_dataset.shuffle(1000).batch(training_args.batch_size).prefetch(1)
+    test_batches = test_dataset.batch(training_args.batch_size).prefetch(1)
 
     mf = MatrixFactorization(number_of_users, number_of_items,
                              training_args.user_dim, training_args.item_dim)
